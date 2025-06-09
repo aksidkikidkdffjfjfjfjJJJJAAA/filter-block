@@ -2,107 +2,108 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>仮想Google検索ブラウザ</title>
+  <title>仮想回避ブラウザ - Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script async src="https://cse.google.com/cse.js?cx=e03c023c1a4714124"></script>
   <style>
     body {
+      background-color: #f2f2ff;
+      font-family: sans-serif;
+      color: #333;
       margin: 0;
-      background-color: #1e1e1e;
-      font-family: "Segoe UI", sans-serif;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
+      padding: 20px;
     }
 
-    .title-bar {
-      background-color: #333;
-      padding: 12px;
+    h1 {
       text-align: center;
-      font-weight: bold;
-      font-size: 18px;
+      margin-bottom: 10px;
     }
 
-    .search-bar {
-      background-color: #2b2b2b;
+    .description {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    form {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    select, input[type="text"] {
+      padding: 8px;
+      font-size: 14px;
+      margin-right: 5px;
+      width: 250px;
+      max-width: 80%;
+    }
+
+    input[type="submit"] {
       padding: 10px 20px;
-    }
-
-    .results-area {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      border-top: 2px solid #444;
-    }
-
-    .search-results {
-      width: 35%;
-      max-width: 500px;
-      background-color: #1f1f1f;
-      padding: 10px;
-      overflow-y: auto;
-    }
-
-    .search-results a {
-      display: block;
-      color: #4da6ff;
-      text-decoration: none;
-      margin-bottom: 8px;
-      word-break: break-word;
-    }
-
-    .viewer {
-      flex: 1;
-      background-color: black;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
     }
 
     iframe {
       width: 100%;
-      height: 100%;
-      border: none;
+      height: 80vh;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      background-color: white;
     }
 
-    @media (max-width: 768px) {
-      .results-area {
-        flex-direction: column;
-      }
-      .search-results {
-        width: 100%;
-        max-height: 200px;
-      }
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      text-align: center;
+      color: #888;
+    }
+
+    a {
+      color: #0077cc;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <div class="title-bar">🔍 仮想Googleブラウザ</div>
-  <div class="search-bar">
-    <div class="gcse-search"></div>
+
+  <h1>仮想回避ブラウザ</h1>
+  <div class="description">
+    任意のURLを読み込んで表示します（iframeで表示可能なページのみ）。
   </div>
-  <div class="results-area">
-    <div class="search-results" id="linkArea">
-      🔗 検索結果を押すと右側に表示されます
-    </div>
-    <div class="viewer">
-      <iframe id="viewer" srcdoc="<p style='color:white; text-align:center; padding-top:20px;'>ここに表示されます</p>"></iframe>
-    </div>
+
+  <form id="viewForm">
+    <select id="protocol">
+      <option value="https://">https://</option>
+      <option value="http://">http://</option>
+    </select>
+    <input type="text" id="urlInput" placeholder="example.com">
+    <input type="submit" value="アクセス">
+  </form>
+
+  <iframe id="viewer" srcdoc="<p style='text-align:center;padding-top:20px;'>ここにサイトが表示されます</p>"></iframe>
+
+  <div class="footer">
+    © 2025 YourName. 教育目的でのみ使用してください。 |
+    <a href="https://github.com/">GitHub</a>
   </div>
 
   <script>
-    // 検索結果にイベントを追加
-    const observer = new MutationObserver(() => {
-      const links = document.querySelectorAll('.gsc-webResult.gsc-result a.gs-title');
-      links.forEach(link => {
-        link.setAttribute('target', '_self');
-        link.onclick = function(e) {
-          e.preventDefault();
-          const url = link.href;
-          document.getElementById('viewer').src = url;
-        };
-      });
-    });
+    document.getElementById("viewForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const protocol = document.getElementById("protocol").value;
+      const url = document.getElementById("urlInput").value.trim();
+      const fullUrl = protocol + url;
 
-    observer.observe(document.body, { childList: true, subtree: true });
+      if (!url) {
+        alert("URLを入力してください。");
+        return;
+      }
+
+      document.getElementById("viewer").src = fullUrl;
+    });
   </script>
 </body>
 </html>
