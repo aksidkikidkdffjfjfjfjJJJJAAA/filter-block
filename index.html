@@ -2,86 +2,33 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>仮想ブラウザ - DuckDuckGo</title>
+  <title>Googleカスタム検索</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       background-color: #1e1e1e;
-      color: #fff;
-      font-family: "Segoe UI", sans-serif;
-      height: 100vh;
+      font-family: sans-serif;
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      margin: 0;
     }
 
-    .browser-frame {
+    .search-box {
       width: 90%;
-      max-width: 1000px;
-      height: 90vh;
-      border: 2px solid #444;
-      border-radius: 12px;
-      background-color: #2b2b2b;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .title-bar {
-      background-color: #3a3a3a;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-    }
-
-    .title-bar h1 {
-      font-size: 16px;
-    }
-
-    .control-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    .control-button {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-    .red { background: #ff5f57; }
-    .yellow { background: #ffbd2e; }
-    .green { background: #28c840; }
-
-    iframe {
-      flex-grow: 1;
-      border: none;
-      width: 100%;
+      max-width: 600px;
+      background-color: #2c2c2c;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
   </style>
 </head>
 <body>
-  <div class="browser-frame">
-    <div class="title-bar">
-      <div class="control-buttons">
-        <div class="control-button red"></div>
-        <div class="control-button yellow"></div>
-        <div class="control-button green"></div>
-      </div>
-      <h1>DuckDuckGo 仮想ブラウザ</h1>
-      <div></div>
-    </div>
-    <iframe src="https://duckduckgo.com/"></iframe>
+  <div class="search-box">
+    <script async src="https://cse.google.com/cse.js?cx=e03c023c1a4714124"></script>
+    <div class="gcse-search"></div>
   </div>
 </body>
 </html>
