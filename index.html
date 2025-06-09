@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>仮想回避ブラウザ - Viewer</title>
+  <title>仮想回避ブラウザ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -24,7 +24,7 @@
       font-size: 14px;
     }
 
-    form {
+    .form-wrapper {
       text-align: center;
       margin-bottom: 20px;
     }
@@ -37,7 +37,7 @@
       max-width: 80%;
     }
 
-    input[type="submit"] {
+    button {
       padding: 10px 20px;
       font-size: 16px;
       background-color: #4CAF50;
@@ -71,17 +71,17 @@
 
   <h1>仮想回避ブラウザ</h1>
   <div class="description">
-    任意のURLを読み込んで表示します（iframeで表示可能なページのみ）。
+    任意のURLを読み込み、ページ内に表示します（iframeで表示可能なサイトのみ）。
   </div>
 
-  <form id="viewForm">
+  <div class="form-wrapper">
     <select id="protocol">
       <option value="https://">https://</option>
       <option value="http://">http://</option>
     </select>
     <input type="text" id="urlInput" placeholder="example.com">
-    <input type="submit" value="アクセス">
-  </form>
+    <button onclick="loadSite()">アクセス</button>
+  </div>
 
   <iframe id="viewer" srcdoc="<p style='text-align:center;padding-top:20px;'>ここにサイトが表示されます</p>"></iframe>
 
@@ -91,19 +91,16 @@
   </div>
 
   <script>
-    document.getElementById("viewForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+    function loadSite() {
       const protocol = document.getElementById("protocol").value;
       const url = document.getElementById("urlInput").value.trim();
-      const fullUrl = protocol + url;
-
       if (!url) {
         alert("URLを入力してください。");
         return;
       }
-
+      const fullUrl = protocol + url;
       document.getElementById("viewer").src = fullUrl;
-    });
+    }
   </script>
 </body>
 </html>
