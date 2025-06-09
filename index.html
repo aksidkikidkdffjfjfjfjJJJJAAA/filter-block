@@ -1,106 +1,24 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>仮想回避ブラウザ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      background-color: #f2f2ff;
-      font-family: sans-serif;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .description {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 14px;
-    }
-
-    .form-wrapper {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    select, input[type="text"] {
-      padding: 8px;
-      font-size: 14px;
-      margin-right: 5px;
-      width: 250px;
-      max-width: 80%;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    iframe {
-      width: 100%;
-      height: 80vh;
-      border: 1px solid #ccc;
-      margin-top: 20px;
-      background-color: white;
-    }
-
-    .footer {
-      margin-top: 30px;
-      font-size: 12px;
-      text-align: center;
-      color: #888;
-    }
-
-    a {
-      color: #0077cc;
-      text-decoration: none;
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>仮想Linux（v86）</title>
+  <script src="https://copy.sh/v86/build/v86.js"></script>
 </head>
 <body>
-
-  <h1>仮想回避ブラウザ</h1>
-  <div class="description">
-    任意のURLを読み込み、ページ内に表示します（iframeで表示可能なサイトのみ）。
-  </div>
-
-  <div class="form-wrapper">
-    <select id="protocol">
-      <option value="https://">https://</option>
-      <option value="http://">http://</option>
-    </select>
-    <input type="text" id="urlInput" placeholder="example.com">
-    <button onclick="loadSite()">アクセス</button>
-  </div>
-
-  <iframe id="viewer" srcdoc="<p style='text-align:center;padding-top:20px;'>ここにサイトが表示されます</p>"></iframe>
-
-  <div class="footer">
-    © 2025 YourName. 教育目的でのみ使用してください。 |
-    <a href="https://github.com/">GitHub</a>
-  </div>
-
+  <h2>Linuxを仮想起動中...</h2>
+  <div id="container" style="width: 100%; height: 600px;"></div>
   <script>
-    function loadSite() {
-      const protocol = document.getElementById("protocol").value;
-      const url = document.getElementById("urlInput").value.trim();
-      if (!url) {
-        alert("URLを入力してください。");
-        return;
-      }
-      const fullUrl = protocol + url;
-      document.getElementById("viewer").src = fullUrl;
-    }
+    const emulator = new V86Starter({
+      wasm_path: "https://copy.sh/v86/build/v86.wasm",
+      memory_size: 512 * 1024 * 1024,
+      vga_memory_size: 8 * 1024 * 1024,
+      screen_container: document.getElementById("container"),
+      bios: { url: "https://copy.sh/v86/bios/seabios.bin" },
+      vga_bios: { url: "https://copy.sh/v86/bios/vgabios.bin" },
+      cdrom: { url: "https://copy.sh/v86/images/tinycore.iso" },
+      autostart: true,
+    });
   </script>
 </body>
 </html>
