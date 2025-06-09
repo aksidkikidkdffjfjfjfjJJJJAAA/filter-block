@@ -2,33 +2,102 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Googleカスタム検索</title>
+  <title>仮想ブラウザ検索</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script async src="https://cse.google.com/cse.js?cx=e03c023c1a4714124"></script>
   <style>
     body {
-      background-color: #1e1e1e;
+      margin: 0;
       font-family: sans-serif;
+      background: #1e1e1e;
       color: white;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
       height: 100vh;
-      margin: 0;
     }
 
-    .search-box {
-      width: 90%;
-      max-width: 600px;
+    .header {
+      background: #333;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .gcse-search {
+      padding: 10px 20px;
+      background-color: #222;
+    }
+
+    .results-wrapper {
+      flex: 1;
+      display: flex;
+      border-top: 1px solid #444;
+    }
+
+    .sidebar {
+      width: 40%;
       background-color: #2c2c2c;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .sidebar a {
+      color: #4da6ff;
+      display: block;
+      margin: 6px 0;
+      word-break: break-all;
+      text-decoration: none;
+    }
+
+    .viewer {
+      flex: 1;
+      background-color: #000;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <div class="search-box">
-    <script async src="https://cse.google.com/cse.js?cx=e03c023c1a4714124"></script>
-    <div class="gcse-search"></div>
+  <div class="header">🔍 仮想ブラウザ検索</div>
+  <div class="gcse-search"></div>
+
+  <div class="results-wrapper">
+    <div class="sidebar" id="linkArea">
+      🔗 検索結果をクリックすると右に表示されます
+    </div>
+    <div class="viewer">
+      <iframe id="viewer" srcdoc="<p style='color:white;text-align:center;padding-top:20px;'>ここにページが表示されます</p>"></iframe>
+    </div>
   </div>
+
+  <script>
+    // クリックされたURLをiframeで表示
+    document.addEventListener("click", function (e) {
+      const link = e.target.closest("a");
+      if (link && link.href && link.target !== "_blank") {
+        e.preventDefault();
+        document.getElementById("viewer").src = link.href;
+        addToSidebar(link.href);
+      }
+    });
+
+    // 検索結果をsidebarに記録（オプション）
+    function addToSidebar(url) {
+      const container = document.getElementById("linkArea");
+      const a = document.createElement("a");
+      a.href = url;
+      a.textContent = url;
+      a.onclick = function (e) {
+        e.preventDefault();
+        document.getElementById("viewer").src = url;
+      };
+      container.appendChild(a);
+    }
+  </script>
 </body>
 </html>
