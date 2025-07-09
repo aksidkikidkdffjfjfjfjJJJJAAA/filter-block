@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>Discord OAuth2 Callback</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>認証成功</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="https://raw.githubusercontent.com/taka-4602/kiyakuuuu/refs/heads/main/success.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <style>
+    /* （あなたが貼ってくれた error の CSS と同じものをここにコピペしてください） */
+  </style>
+</head>
 <body>
-  <h1>ログイン成功！</h1>
-  <p>以下の <strong>access_token</strong> をコピーして、Discord の <code>/login-token</code> へ貼り付けてください：</p>
-  <pre id="token">取得に失敗しました</pre>
-  <script>
-    // URL の #access_token=… を抽出
-    const hash = new URLSearchParams(location.hash.slice(1));
-    const token = hash.get('access_token');
-    document.getElementById('token').textContent = token || '取得に失敗しました';
-  </script>
+  <card>
+    <light></light>
+    <spotlight></spotlight>
+    <central>
+      <!-- 成功時アイコンは success.png を用意 -->
+      <img src="https://raw.githubusercontent.com/taka-4602/kiyakuuuu/refs/heads/main/success.png"
+           width="75" alt="認証成功" class="error" />
+      <heading>認証成功</heading>
+      <error>
+        ログインが完了しました。<br>
+        下のボタンで Discord に戻り、<code>/login-token</code> を実行してください。
+      </error>
+    </central>
+    <a href="https://discord.com/channels/@me" class="joinus">
+      <span>Discord へ戻る</span>
+    </a>
+  </card>
+  <copylight>
+    Designed by <a href="https://github.com/EdamAme-x">@EdamAme-x</a>
+  </copylight>
 </body>
 </html>
